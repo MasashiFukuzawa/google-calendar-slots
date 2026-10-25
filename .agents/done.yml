@@ -1,0 +1,14 @@
+repo: google-calendar-slots
+verify:
+  - run: pnpm lint
+  - run: pnpm check
+  - run: pnpm test
+  - run: pnpm build
+docs_checks:
+  - READMEの仕様・導入手順・実機検証状況が現在の実装と一致する
+review_criteria:
+  - 選択した30分／60分以上の空きを複数予定の和集合から求め、読み取れない予定を無視しない
+  - 表示中の5日と7日のみを対象にし、年・月・日付またぎを正しく扱う
+  - 拡張に不要な権限・外部送信・予定データの保存を追加しない
+  - 実機で確認した範囲と未確認の範囲を区別する
+external_review: codex

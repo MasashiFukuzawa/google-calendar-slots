@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Google Calendar Slots",
+  "version": "0.2.0",
+  "description": "Googleカレンダーで表示中の5日・7日から、30分／60分以上の空き時間を1クリックでコピーします。",
+  "permissions": ["activeTab", "scripting", "clipboardWrite", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Google Calendar Slots — 空き時間をコピー"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

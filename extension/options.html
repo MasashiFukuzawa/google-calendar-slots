@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Google Calendar Slots — 設定</title>
+    <link rel="stylesheet" href="options.css">
+    <script src="core.js" defer></script>
+    <script src="options.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">GOOGLE CALENDAR</p>
+      <h1>Google Calendar Slots</h1>
+      <p>Googleカレンダーで今表示している5日・7日から、空き時間をコピーします。</p>
+      <form id="settings">
+        <fieldset>
+          <legend>予定を入れられる時間帯</legend>
+          <div class="times">
+            <label>開始<input id="start" type="time" value="09:00" step="60" required></label>
+            <span aria-hidden="true">〜</span>
+            <label>終了<input id="end" type="time" value="21:00" step="60" required></label>
+          </div>
+          <p class="hint">表示中の土日も対象です。予定の前後に余白は加えません。</p>
+        </fieldset>
+        <label class="minimum">空き時間の最小長
+          <select id="minimum" required>
+            <option value="30">30分以上</option>
+            <option value="60" selected>60分以上</option>
+          </select>
+        </label>
+        <div class="actions">
+          <button type="submit">設定を保存</button>
+          <button type="button" id="reset">初期値に戻す</button>
+        </div>
+        <p id="status" role="status" aria-live="polite"></p>
+      </form>
+      <aside>
+        <h2>普段の操作は1クリック</h2>
+        <p>Googleカレンダーを5日または7日表示にして、ツールバーの拡張アイコンをクリックしてください。</p>
+        <p>画面に表示対象として選ばれている予定を除外します。予定の取得に失敗した場合はコピーを止めます。</p>
+      </aside>
+    </main>
+  </body>
+</html>

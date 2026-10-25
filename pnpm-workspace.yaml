@@ -1,0 +1,4 @@
+# 依存パッケージのインストール時スクリプトを実行しない。
+ignoreScripts: true
+# 公開直後の依存更新を避ける（単位: 分）。
+minimumReleaseAge: 1440

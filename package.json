@@ -1,0 +1,26 @@
+{
+  "name": "google-calendar-slots",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "check": "node scripts/check.js",
+    "build": "node scripts/build.js",
+    "lint": "biome check .",
+    "format": "biome check --write ."
+  },
+  "license": "MIT",
+  "description": "Googleカレンダーの空き時間を1クリックでコピーするChrome拡張",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MasashiFukuzawa/google-calendar-slots.git"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "devDependencies": {
+    "@biomejs/biome": "2.6.2"
+  }
+}
