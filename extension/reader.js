@@ -122,12 +122,9 @@
     return { start: Math.max(0, start - day), end: Math.min(1440, end - day) };
   }
 
-  function eventCount(label, allDay = false) {
-    if (allDay && /^終日の予定はありません/.test(label)) return 0;
-    if (!allDay && /^(?:予定はありません|予定なし)/.test(label)) return 0;
-    const match = label.match(
-      allDay ? /^(\d+)\s*件の終日の予定/ : /^(\d+)\s*件の予定/,
-    );
+  function eventCount(label) {
+    if (/^(?:予定はありません|予定なし)/.test(label)) return 0;
+    const match = label.match(/^(\d+)\s*件の予定/);
     return match ? Number(match[1]) : null;
   }
 
@@ -190,26 +187,7 @@
         busy.push({ date, ...range });
       }
     }
-    // 終日欄の件数から日全体を除外する。折り畳みや複数日バーの幅には依存しない。
-    const allDayCells = [...document.querySelectorAll('[role="gridcell"]')]
-      .filter(rendered)
-      .filter(
-        (cell) =>
-          !cell.hasAttribute("data-column-index") &&
-          /終日/.test(accessibleText(cell, document)),
-      );
-    const allDayDates = new Set();
-    for (const cell of allDayCells) {
-      const label = accessibleText(cell, document);
-      const date = resolveColumnDate(label, anchors[0]);
-      const count = eventCount(label, true);
-      if (!dates.includes(date) || count === null || allDayDates.has(date))
-        fail("終日の予定を確認できませんでした。");
-      allDayDates.add(date);
-      if (count > 0) busy.push({ date, start: 0, end: 1440 });
-    }
-    if (allDayDates.size !== dates.length)
-      fail("終日の予定欄を確認できませんでした。");
+    // 祝日を含む終日予定は空き時間の判定に使わない。
     // 予定タイトルに含まれるGMT文字列をタイムゾーンと誤認しない。
     const offsets = [
       ...new Set(

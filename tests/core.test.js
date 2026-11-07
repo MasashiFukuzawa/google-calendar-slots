@@ -42,7 +42,7 @@ test("対象時間をまたぐ予定を除外する", () => {
   assert.deepEqual(result[0].slots, [{ start: 660, end: 1020 }]);
 });
 
-test("予定がなければ対象時間全体、終日予定があれば空きなし", () => {
+test("予定がなければ対象時間全体、0時から24時の時間指定の予定があれば空きなし", () => {
   assert.deepEqual(findFreeSlots([date], [])[0].slots, [
     { start: 540, end: 1260 },
   ]);
