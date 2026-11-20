@@ -59,7 +59,7 @@
       }
       await navigator.clipboard.writeText(text);
       const count = days.reduce((total, day) => total + day.slots.length, 0);
-      const message = `${count}件の空き時間をコピーしました。\n${calendar.dates.length}日分・${api.formatTime(settings.startMinute)}〜${api.formatTime(settings.endMinute)}・${settings.minimumMinutes}分以上（${calendar.timezone}）`;
+      const message = `${count}件の空き時間をコピーしました。\n${calendar.dates.length}日分・${api.formatTime(settings.startMinute)}〜${api.formatTime(settings.endMinute)}・${settings.minimumMinutes}分以上`;
       showResult(message);
       return { ok: true, message };
     } catch (error) {

@@ -187,24 +187,7 @@
         busy.push({ date, ...range });
       }
     }
-    // 祝日を含む終日予定は空き時間の判定に使わない。
-    // 予定タイトルに含まれるGMT文字列をタイムゾーンと誤認しない。
-    const offsets = [
-      ...new Set(
-        [...document.querySelectorAll(".ouBNcf")]
-          .filter(rendered)
-          .map((element) => element.textContent.trim())
-          .filter((text) => /^GMT[+−-]\d{1,2}(?::\d{2})?$/.test(text)),
-      ),
-    ];
-    if (offsets.length !== 1)
-      fail(
-        "画面のタイムゾーンを一意に確認できませんでした。追加タイムゾーンを非表示にして実行してください。",
-      );
-    const timezone = /^GMT\+0?9(?::00)?$/.test(offsets[0])
-      ? "日本時間"
-      : offsets[0];
-    return { dates, busy, timezone };
+    return { dates, busy };
   }
 
   Object.assign(api, {

@@ -88,7 +88,11 @@ test("予定タイトル中の日付ではなく末尾の開催日と列の日�
 });
 
 // ブラウザDOM境界への入力。ラベルは既存の日本語形式に合わせた架空の予定。
-function calendarFixture(dayCount, eventLabels = []) {
+function calendarFixture(
+  dayCount,
+  eventLabels = [],
+  timezoneLabels = ["GMT+09"],
+) {
   const document = {
     defaultView: { getComputedStyle: () => ({ visibility: "visible" }) },
     querySelectorAll: (selector) => nodes.get(selector) ?? [],
@@ -125,9 +129,31 @@ function calendarFixture(dayCount, eventLabels = []) {
     ['[role="gridcell"][data-column-index][data-datekey]', cells],
     ['[role="gridcell"]', [...allDayCells, ...cells]],
     ["h1[aria-label]", [element("2037年10月26日")]],
-    [".ouBNcf", [element("GMT+09")]],
+    [".ouBNcf", timezoneLabels.map((label) => element(label))],
   ]);
   return { document, dates };
+}
+
+for (const [description, timezoneLabels] of [
+  ["タイムゾーン表示が読めない場合", []],
+  ["タイムゾーンが複数表示される場合", ["GMT+09", "GMT-05"]],
+]) {
+  test(`${description}も画面上の予定時刻をもとに空き時間を求める`, () => {
+    const { readCalendar, findFreeSlots } = globalThis.CalendarFreeSlots;
+    const { document } = calendarFixture(
+      7,
+      [["午前10時～午前11時、「相談」、2037年10月26日"]],
+      timezoneLabels,
+    );
+
+    const calendar = readCalendar(document);
+    const days = findFreeSlots(calendar.dates, calendar.busy);
+
+    assert.deepEqual(days[0].slots, [
+      { start: 540, end: 600 },
+      { start: 660, end: 1260 },
+    ]);
+  });
 }
 
 for (const dayCount of [5, 7]) {
